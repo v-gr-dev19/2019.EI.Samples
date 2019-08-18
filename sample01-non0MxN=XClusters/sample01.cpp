@@ -16,7 +16,6 @@ const auto fullness = static_cast<size_t>( double( M*N ) * fullnessPercent / 100
 
 int main()
 {
-	std::cout << "Hello! Let's go!\n"; 
 	auto* pm = new nonZeroMxNMatrix;
 	assert( pm );
 	auto& m = *pm;
