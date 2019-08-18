@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <iostream>
 #include <cassert>
+#include <vector>
 #include "sample01.h"
 #include "matrix.h"
 using namespace std;
@@ -17,4 +18,8 @@ void outputMatrix( const nonZeroMxNMatrix& m ) {
 		cout << " }" << endl;
 	} );
 	cout << "}" << endl;
+}
+
+void outputVector( const vector<unsigned>& v ) {
+	// TODO: реализовать функцию
 }
