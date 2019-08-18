@@ -12,10 +12,10 @@ void generate01Matrix( nonZeroMxNMatrix &m, size_t fullness, size_t rows = M, si
 			m[i][j] = 0;
 	size_t countOf1 = 0;
 	
-    default_random_engine generator;
-    uniform_int_distribution<size_t> distribution(0, rows*cols - 1);
-    generator.seed( time( 0 ) );
-    generator();
+	default_random_engine generator;
+	uniform_int_distribution<size_t> distribution(0, rows*cols - 1);
+	generator.seed( time( 0 ) );
+	generator();
 
 	while( countOf1 < fullness && countOf1 < rows*cols ) {
 		size_t next = distribution( generator );
