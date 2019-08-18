@@ -15,7 +15,7 @@ void outputVector( const vector<unsigned>& );
 void detectClustersInMatrix( const nonZeroMxNMatrix& m, nonZeroMxNMatrix& m1, vector<unsigned>& e );
 size_t getClustersCount( const vector<unsigned>& );
 
-const double fullnessPercent = 20;
+const double fullnessPercent = 50;
 const auto fullness = static_cast<size_t>( double( M*N ) * fullnessPercent / 100 );
 
 int main()

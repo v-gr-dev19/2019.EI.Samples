@@ -21,5 +21,10 @@ void outputMatrix( const nonZeroMxNMatrix& m ) {
 }
 
 void outputVector( const vector<unsigned>& v ) {
-	// TODO: реализовать функцию
+	auto on = "ev"; cout << on << "[" << v.size() << "]={";
+	int count = 0;
+	for_each( v.begin(), v.end(), [&count]( const int item ) {
+		cout << ( count++ ? "," : "") << item;
+	} );
+	cout << "}" << endl;
 }
