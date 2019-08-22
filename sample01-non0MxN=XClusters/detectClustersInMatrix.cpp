@@ -10,7 +10,8 @@ using namespace std;
 // 	m0 - исходная матрица с 0,1
 // 	m1 - результирующая матрица с номерами кластеров вместо 1, кластеры нумеруем с 1
 // 	eqVector - вектор эквивалентностей кластеров, eqVector[i-1] = k => k-й кластер эквивалентен i-му кластеру
-void detectClustersInMatrix( const nonZeroMxNMatrix& m0, nonZeroMxNMatrix& m1, vector<size_t>& eqVector, size_t& numberOfClusters ) {
+void detectClustersInMatrix( const nonZeroMxNMatrix& m0, nonZeroMxNMatrix& m1, vector<size_t>& eqVector, size_t& numberOfClusters )
+{
 	assert( m0.size() == m1.size() );
 	if( 0 < m0.size() ) {
 		assert( m0[0].size() == m1[0].size() );

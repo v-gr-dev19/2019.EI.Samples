@@ -6,7 +6,8 @@
 #include "matrix.h"
 using namespace std;
 
-void outputMatrix( const nonZeroMxNMatrix& m ) {
+void outputMatrix( const nonZeroMxNMatrix& m )
+{
 	auto oName = "matrix";
 	assert( 0 < m.size() );
 	assert( 0 < m[0].size() );
@@ -27,7 +28,8 @@ void outputMatrix( const nonZeroMxNMatrix& m ) {
 	cout << "}" << endl;
 }
 
-void outputVector( const vector<size_t>& v ) {
+void outputVector( const vector<size_t>& v )
+{
 	auto on = "ev"; cout << on << "[" << v.size() << "] = {";
 	int count = 0;
 	for_each( v.begin(), v.end(), [&count]( const size_t item ) {
