@@ -13,8 +13,8 @@ void generate01Matrix( nonZeroMxNMatrix &m, size_t fullness, size_t rows = M, si
 	size_t countOf1 = 0;
 	
 	default_random_engine generator;
-	uniform_int_distribution<size_t> distribution(0, rows*cols - 1);
-	generator.seed( time( 0 ) );
+	uniform_int_distribution<size_t> distribution( 0, rows*cols - 1 );
+	generator.seed( static_cast<unsigned int>( time( 0 ) ) );
 	generator();
 
 	while( countOf1 < fullness && countOf1 < rows*cols ) {
@@ -26,4 +26,30 @@ void generate01Matrix( nonZeroMxNMatrix &m, size_t fullness, size_t rows = M, si
 			countOf1++;
 		}
 	}
+}
+
+void set01Matrix( nonZeroMxNMatrix &m, size_t rows = M, size_t cols = N )
+{
+	size_t testMatrix[M][N] =
+	{ /*
+		{ 1,0,0,0,0,1,1,0,1 },
+		{ 0,0,1,1,1,1,0,1,0 },
+		{ 1,1,1,0,0,1,0,1,0 },
+	};
+	{ */ // хороший плохой пример 10x20
+		{ 0,1,1,0,1,1,1,1,1,0,0,0,0,1,0,0,0,0,0,1 },
+		{ 1,0,0,0,1,1,1,1,0,0,1,0,0,0,1,1,1,1,0,1 },
+		{ 1,0,0,0,1,1,0,0,0,1,0,0,0,1,0,0,1,1,0,1 },
+		{ 0,0,1,1,1,1,0,0,1,1,0,0,0,0,0,0,1,1,1,0 },
+		{ 1,1,0,1,0,1,0,0,1,0,0,0,1,0,0,1,1,0,1,1 },
+		{ 0,0,0,0,0,1,1,0,0,1,0,1,0,1,0,1,1,1,0,0 },
+		{ 1,1,0,1,0,0,1,1,0,0,0,1,1,1,0,0,1,1,1,1 },
+		{ 1,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,1,1,0,1 },
+		{ 0,1,0,0,0,1,1,1,1,1,1,0,0,1,1,1,1,0,1,0 },
+		{ 1,1,1,1,0,0,1,1,0,0,0,1,1,1,0,0,1,0,1,0 },
+	};
+
+	for( size_t i = 0; i < rows; i++ )
+		for( size_t j = 0; j < cols; j++ )
+			m[i][j] = testMatrix[i][j];
 }
