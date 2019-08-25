@@ -5,7 +5,7 @@
 #include <ctime>
 
 using namespace std;
-void generate01Matrix( nonZeroMxNMatrix &m, size_t fullness, size_t rows = M, size_t cols = N )
+void generate01Matrix( nonZeroMxNMatrix &m, size_t fullness, size_t rows, size_t cols )
 {
 	for( size_t i = 0; i < rows; i++ )
 		for( size_t j = 0; j < cols; j++ )
@@ -28,7 +28,7 @@ void generate01Matrix( nonZeroMxNMatrix &m, size_t fullness, size_t rows = M, si
 	}
 }
 
-void set01Matrix( nonZeroMxNMatrix &m, size_t rows = M, size_t cols = N )
+void set01Matrix( nonZeroMxNMatrix &m, size_t rows, size_t cols )
 {
 	size_t testMatrix[M][N] =
 	{ /*

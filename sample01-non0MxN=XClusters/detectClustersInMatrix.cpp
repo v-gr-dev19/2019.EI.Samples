@@ -3,6 +3,7 @@
 #include <vector>
 #include "sample01.h"
 #include "matrix.h"
+#include "debug.h"
 using namespace std;
 
 // Определяем 8-связные кластеры из единиц в матрице
@@ -66,6 +67,7 @@ void detectClustersInMatrix( const nonZeroMxNMatrix& m0, nonZeroMxNMatrix& m1, v
 								eqVector[assignedCluster - 1] = m1[i-1][j+1];
 							}
 						}
+						debug(( i, j, eqVector ));
 					}
 				}
 				// в текущей позиции матрицы - новый уникальный кластер
