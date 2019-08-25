@@ -9,7 +9,7 @@ using namespace std;
 void debugEx( size_t i, size_t j, const vector<size_t>& v )
 {
 	cout << i << "," << j << " ";
-	outputVector( v );
+	demoVector( v );
 }
 
 void debugEx( const char* key, ... )

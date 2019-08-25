@@ -38,12 +38,12 @@ int main()
 		
 	// показываем вспомогательную матрицу и вектор эквивалентностей
 	outputMatrix( m1 );
-	outputVector( ev );
+	demoVector( ev );
 	
 	// нормализуем вектор эквивалентности и вспомогательную матрицу
 	normalizeClustersInMatrix( m1, ev ); 
-	outputVector( ev );
-	outputMatrix( m1 );
+	demoVector( ev );
+	demoMatrix( m1 );
 	
 
 	// Ответ:
