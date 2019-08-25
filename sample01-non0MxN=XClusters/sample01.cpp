@@ -11,6 +11,8 @@
 #include <cassert>
 #include <vector>
 #include "sample01.h"
+#include "debug.h"
+
 using namespace std;
 
 const auto fullness = static_cast<size_t>( double( M*N ) * fullnessPercent / 100 );
@@ -36,19 +38,22 @@ int main()
 	size_t clustersCount = 0;
 	detectClustersInMatrix( m0, m1, ev, clustersCount );
 		
-	// показываем вспомогательную матрицу и вектор эквивалентностей
-	outputMatrix( m1 );
-	demoVector( ev );
-	
-	// нормализуем вектор эквивалентности и вспомогательную матрицу
-	normalizeClustersInMatrix( m1, ev ); 
-	demoVector( ev );
-	demoMatrix( m1 );
-	
-
 	// Ответ:
 	cout << "The number of clusters is " << clustersCount << endl;
+	debug(( "trace output" ));
+
+	// показываем вспомогательную матрицу и вектор эквивалентностей
+	demoMatrix( m1 );
+	demoVector( ev );
 	
+	// нормализуем вектор эквивалентности и вспомогательную матрицу для демонстрации
+	normalizeClustersInMatrix( m1, ev ); 
+	// демонстрация
+	demoVector( ev );
+	// demoMatrix( m0 );
+	demoMatrix( m1 );
+	// outputMatrix( m1 );
+
 	delete &m0;
 	delete &m1;
 }

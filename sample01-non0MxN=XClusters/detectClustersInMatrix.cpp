@@ -5,12 +5,12 @@
 #include "matrix.h"
 #include "debug.h"
 using namespace std;
-
 // Определяем 8-связные кластеры из единиц в матрице
 // Параметры:
 // 	m0 - исходная матрица с 0,1
 // 	m1 - результирующая матрица с номерами кластеров вместо 1, кластеры нумеруем с 1
 // 	eqVector - вектор эквивалентностей кластеров, eqVector[i-1] = k => k-й кластер эквивалентен i-му кластеру
+//	numberOfClusters - возвращаем количество кластеров
 void detectClustersInMatrix( const nonZeroMxNMatrix& m0, nonZeroMxNMatrix& m1, vector<size_t>& eqVector, size_t& numberOfClusters )
 {
 	assert( m0.size() == m1.size() );
@@ -19,7 +19,7 @@ void detectClustersInMatrix( const nonZeroMxNMatrix& m0, nonZeroMxNMatrix& m1, v
 	}
 	
 	// для подсчета количества слияний
-	size_t mergeCounter = 0;
+	size_t mergesCounter = 0;
 
 	// проходим по каждому элементу матрицы
 	for( size_t i = 0; i < m0.size(); i++ ) {
@@ -30,17 +30,17 @@ void detectClustersInMatrix( const nonZeroMxNMatrix& m0, nonZeroMxNMatrix& m1, v
 			} else {
 			// ненулевой элемент матрицы
 				size_t assignedCluster = 0; // номер кластера будет присвоен текущему элементу матрицы
-				if( 0 < j && m0[i][j-1] && ( 0 == assignedCluster || eqVector[m1[i][j-1] - 1] < assignedCluster ) ) {
+				if( 0 < j && m0[i][j-1] && 0 == assignedCluster ) {
 					// берем номер кластера слева
 					assignedCluster = m1[i][j-1];
 					m1[i][j] = assignedCluster;
 				}
-				if( 0 < i && m0[i-1][j] && ( 0 == assignedCluster || eqVector[m1[i-1][j] - 1] < assignedCluster ) ) {
+				if( 0 < i && m0[i-1][j] && 0 == assignedCluster ) {
 					// берем номер кластера сверху
 					assignedCluster = m1[i-1][j];
 					m1[i][j] = assignedCluster;
 				}
-				if( 0 < i && 0 < j && m0[i-1][j-1] && ( 0 == assignedCluster || eqVector[m1[i-1][j-1] - 1] < assignedCluster ) ) {
+				if( 0 < i && 0 < j && m0[i-1][j-1] && 0 == assignedCluster ) {
 					// берем номер кластера сверху-слева
 					assignedCluster = m1[i-1][j-1];
 					m1[i][j] = assignedCluster;
@@ -51,23 +51,36 @@ void detectClustersInMatrix( const nonZeroMxNMatrix& m0, nonZeroMxNMatrix& m1, v
 						assignedCluster = m1[i-1][j+1];
 						m1[i][j] = assignedCluster;
 					} else {
-						// отмечаем в векторе эквивалентностей факт слияния кластеров
-						if( assignedCluster < m1[i-1][j+1] ) {
-							if( m1[i-1][j+1] == eqVector[m1[i-1][j+1] - 1] ) {
-								mergeCounter++; // подсчитываем присоединение уникального кластера
-							}
-							// присоединяем кластер "от большего к меньшему"
-							eqVector[m1[i-1][j+1] - 1] = assignedCluster;
-						} else {
-							if( m1[i-1][j+1] < assignedCluster ) {
-								if( assignedCluster == eqVector[assignedCluster - 1] ) {
-									mergeCounter++; // подсчитываем присоединение уникального кластера
+						// слияние кластеров
+						auto rightCluster = m1[i-1][j+1];
+						if( assignedCluster != rightCluster ) {
+							auto rightParentCluster = eqVector[m1[i-1][j+1] - 1];
+							auto leftParentCluster = eqVector[assignedCluster - 1];
+							decltype( assignedCluster ) pushedCluster = 0;
+							decltype( assignedCluster ) poppedCluster = 0;
+							if( leftParentCluster != rightParentCluster ) {
+								if( leftParentCluster < rightParentCluster ) {
+									pushedCluster = leftParentCluster;
+									poppedCluster = rightCluster;
+								} else {
+									pushedCluster = rightParentCluster;
+									poppedCluster = assignedCluster;
 								}
-								// присоединяем кластер "от большего к меньшему"
-								eqVector[assignedCluster - 1] = m1[i-1][j+1];
+								debug(( "trace 01 init" ));
+								while( pushedCluster < poppedCluster ) {
+									auto parentCluster = eqVector[poppedCluster - 1];
+									if( parentCluster == poppedCluster ) {
+										mergesCounter++; // подсчитываем присоединение уникального кластера
+									}
+									// присоединяем кластеры "больший к меньшему"
+									eqVector[poppedCluster - 1] = pushedCluster;
+									poppedCluster = parentCluster;
+									debug(( "trace 01 tick" ));
+								}
+								debug(( "trace 01 check", i, j ));
+								// debug(( i, j, eqVector ));
 							}
 						}
-						debug(( i, j, eqVector ));
 					}
 				}
 				// в текущей позиции матрицы - новый уникальный кластер
@@ -79,5 +92,5 @@ void detectClustersInMatrix( const nonZeroMxNMatrix& m0, nonZeroMxNMatrix& m1, v
 			}
 		}
 	}
-	numberOfClusters = eqVector.size() - mergeCounter;
+	numberOfClusters = eqVector.size() - mergesCounter;
 }
